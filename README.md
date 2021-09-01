@@ -33,10 +33,18 @@ curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install nodejs -y
 sudo npm install pm2 -g -y
 ```
-
-
-
-
-**UNFINISHED**
-To copy the app folder into the EC2 machine, enter the following command into the git bash terminal:
-`scp -ri sre_key.pem ~/Documents/sreRepo/intro-to-cloud-computing/app/ ubuntu@34.240.158.131:/home/ubuntu/app`
+- Enter `exit`
+- Run the following line in Git Bash to copy the app folder from my intro-to-cloud-computing folder to the EC2 machine:
+```bash
+scp -ri sre_key.pem ~/Documents/sreRepo/intro-to-cloud-computing/app/ ubuntu@34.240.158.131:/home/ubuntu/app
+```
+- To ssh back into the EC2 machine, enter the line from the example section of step 4 of the SSH Client tab (AWS)
+- Enter the following command: `cd /home/ubuntu/app`
+- Then `sudo npm install`
+- Then `npm start`
+- Navigate to the public IP address for the instance (to find this, go back to AWS and navigate to Instances -> your instance -> Details, and copy the Public IP address from there, then paste it into your browser)
+- The nginx page should appear
+- In AWS, in Instances -> your instance, click Security
+- Click the name of the security group
+- Add a rule of Type: Custom TCP, and set the Port range to 3000, the Source to Anywhere IPv4, and the Description to 'node app'
+- Now add :3000 to the end of the instance's public IP address to view the test page
