@@ -1,8 +1,9 @@
 # Instructions for setting up EC2 Machine
 - In AWS, navigate to Services -> EC2 -> Launch instances
-- Select the Ubuntu 16.04 LTS (HVM) machine
+- Select the `Ubuntu Server 16.04 LTS (HVM), SSD Volume Type`
 - Click Next: Configure Instance Details
 - Click on the Subnet drop-down menu and select DevOpsStudent default 1a
+- Set Auto-assign Public IP to Enable
 - Click Next: Add Storage
 - Click Next: Add Tags
 - Click Add another tag
@@ -17,6 +18,8 @@
 - Back in AWS, select the relevant key pair
 - Click Launch instances
 - Response says "Your instances are now launching" with a link beside it; click the link
+
+**Installing dependencies**
 - Select the instance, then click Connect
 - Click on the SSH Client tab
 - In Git Bash, in the same folder as before, run the command given by Step 3 of the SSH Client tab, then run the line given in the example section of Step 4
@@ -36,15 +39,17 @@ sudo npm install pm2 -g -y
 - Enter `exit`
 - Run the following line in Git Bash to copy the app folder from my intro-to-cloud-computing folder to the EC2 machine:
 ```bash
-scp -ri sre_key.pem ~/Documents/sreRepo/intro-to-cloud-computing/app/ ubuntu@34.240.158.131:/home/ubuntu/app
+scp -ri sre_key.pem ~/Documents/sreRepo/intro-to-cloud-computing/app/ ubuntu@<public ip>:/home/ubuntu/app
 ```
 - To ssh back into the EC2 machine, enter the line from the example section of step 4 of the SSH Client tab (AWS)
 - Enter the following command: `cd /home/ubuntu/app`
 - Then `sudo npm install`
 - Then `npm start`
+
+**Time to open the page!**
 - Navigate to the public IP address for the instance (to find this, go back to AWS and navigate to Instances -> your instance -> Details, and copy the Public IP address from there, then paste it into your browser)
 - The nginx page should appear
 - In AWS, in Instances -> your instance, click Security
 - Click the name of the security group
 - Add a rule of Type: Custom TCP, and set the Port range to 3000, the Source to Anywhere IPv4, and the Description to 'node app'
-- Now add :3000 to the end of the instance's public IP address to view the test page
+- Now add `:3000` to the end of the instance's public IP address to view the test page
